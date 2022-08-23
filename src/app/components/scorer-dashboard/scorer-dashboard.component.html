@@ -1,0 +1,186 @@
+<div style="width:100vw; height:13vh;padding: 2vh 2vw; border-bottom: solid lightgray 0.3vh;">
+    <div class="team-container">
+        <a for="team-1" class="heading">Team 01 (1st Batting)</a><br>
+        <select [(ngModel)]="live_match.team_1" [disabled]="isLive">
+            <option value="select">-- SELECT --</option>
+            <option [value]="team.id" *ngFor="let team of teams; let i = index">{{team.name}}</option>
+        </select>
+    </div>
+    <img src="./../../../assets/versus-png.png" alt="VS" style="width: 5vw;float:left; margin: 0 2vw;">
+    <div class="team-container">
+        <a for="team-2" class="heading">Team 02</a><br>
+        <select [(ngModel)]="live_match.team_2" [disabled]="isLive">
+            <option value="select">-- SELECT --</option>
+            <option [value]="team.id" *ngFor="let team of teams; let i = index">{{team.name}}</option>
+        </select>
+    </div>
+    <div class="team-container" style="width: 10vw; margin-left:2vw">
+        <a for="team-2" class="heading">Overs</a><br>
+        <input type="number" class="input" [(ngModel)]="live_match.overs" [disabled]="isLive">
+    </div>
+    <div class="team-container" style="width: 10vw; margin-left:2vw">
+        <a for="team-2" class="heading">Balls/Over</a><br>
+        <input type="number" class="input" [(ngModel)]="live_match.balls" [disabled]="isLive">
+    </div>
+    <div class="team-container" style="width: 10vw; float:right" [hidden]="isLive">
+        <button class="start-btn" (click)="start_match()">Start Match</button>
+    </div>
+</div>
+<div class="match-detail" [hidden]="!isLive">
+    <div id="inning-2" class="inning-block" [hidden]="live_match.inning == 1">
+        <a class="heading" style="font-size: 1.2vw;color:rgb(18, 111, 216)">2nd Inning</a>
+    </div>
+
+    <div id="inning-1" class="inning-block">
+        <div class="heading"
+            style="font-size: 1.1vw;color: white; background-color: grey; padding: 0.8vh 2vw;width: 69vw; text-align: center;">
+            1st Inning</div><br>
+        <a style="font-size: 2.5vw;">
+            {{live_match.inning_detail["1"]?.versions[live_match.inning_detail["1"]?.cur_version]?.score}} /
+            {{live_match.inning_detail["1"]?.versions[live_match.inning_detail["1"]?.cur_version]?.wicket}}
+        </a>
+        <a style="font-size: 1vw; margin-right:1vw;">({{live_match.inning_detail["1"]?.versions[live_match.inning_detail["1"]?.cur_version]?.over}}.{{live_match.inning_detail["1"]?.versions[live_match.inning_detail["1"]?.cur_version]?.ball}})
+            over(s)</a>
+        <a style="font-size:1vw; font-weight:bold;border-left: solid 0.1vw grey; padding-left: 1vw;">
+            Extras: <a
+                style="font-weight:normal">{{live_match.inning_detail["1"]?.versions[live_match.inning_detail["1"]?.cur_version]?.extras}}</a></a><br>
+        <div class="batting-block">
+            <a class="heading" style="font-size: 1vw;"
+                [style.color]="teams_obj[live_match.inning_detail['1']?.versions[live_match.inning_detail['1']?.cur_version]?.batting]?.color">
+                {{teams_obj[live_match.inning_detail["1"]?.versions[live_match.inning_detail["1"]?.cur_version]?.batting]?.name}}</a>
+            <div id="batsmans">
+                <br>
+                <div class="batsman-block" style="box-shadow: none;padding-left: 1vw;height: 4vh;">
+                    <a style="text-align: left;width: 13vw;float: left;border:none; font-size: 0.8vw;outline:none;background-color: none;
+                        font-weight: bold;">Batsman</a>
+                    <a style="text-align: center;font-weight: bold;width: 3vw;float: left;">Runs</a>
+                    <div style="font-weight: bold;text-align: center;width: 5vw;float: right;">Status</div>
+                </div>
+                <div class="batsman-block" style="cursor: pointer;"
+                    *ngFor="let batsman of live_match.inning_detail['1']?.versions[live_match.inning_detail['1']?.cur_version]?.bat_detail; let i = index"
+                    [style.border]="batsman.onStrike=='*'?'0.3vh solid dodgerblue':'0.3vh solid white'"
+                    [style.backgroundColor]="batsman.status=='OUT'?'#FFCCCB': 'white'"
+                    [style.borderColor]="batsman.status=='OUT'?'#FF7F7F': batsman.onStrike=='*'?'dodgerblue': 'white'"
+                    [style.opacity]="batsman.status=='OUT'?'0.6':'1'">
+                    <select [(ngModel)]="batsman.id"
+                    [style.backgroundColor]="batsman.status=='OUT'?'#FFCCCB': 'white'"
+                        style="text-align: left;width: 13vw;float: left;border:none; font-size: 0.8vw;outline:none;background-color: none;font-weight: bold;"
+                        (change)="update_live_match()">
+                        <option value="select">--SELECT--</option>
+                        <option [value]="player.id"
+                            *ngFor="let player of players_team_obj[live_match.inning_detail['1']?.versions[live_match.inning_detail['1']?.cur_version]?.batting]; let i = index">
+                            {{player.name}}</option>
+                    </select>
+                    <a
+                        style="text-align: center;width: 3vw;float: left;position: relative;top: 0.8vh;left: 1vw;">{{batsman.runs}}</a>
+                    <div [style.color]="batsman.status=='OUT'?'red':'grey'"
+                        style="font-weight: bold;text-align: center;width: 5vw;float: right;position: relative;top: 0.8vh;">
+                        {{batsman.status}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="balling-block">
+            <a class="heading" style="font-size: 1vw;"
+                [style.color]="teams_obj[live_match.inning_detail['1']?.versions[live_match.inning_detail['1']?.cur_version]?.fielding]?.color">
+                {{teams_obj[live_match.inning_detail["1"]?.versions[live_match.inning_detail["1"]?.cur_version]?.fielding]?.name}}</a>
+            <div id="ballers">
+                <br>
+                <div class="baller-block" style="box-shadow: none;padding-left: 1vw;height: 4vh;">
+                    <a style="text-align: left;width: 10vw;float: left;border:none; font-size: 0.8vw;outline:none;background-color: none;
+                        font-weight: bold;">Baller</a>
+                    <a style="text-align: center;font-weight: bold;width: 3vw;float: left;">Runs</a>
+                    <a
+                        style="text-align: center;font-weight: bold;width: 3vw;float: left;margin-right: 1vw;">Wickets</a>
+                    <div style="font-weight: bold;text-align: left;width: 15vw;float: left;
+                    border-left: 0.2vw solid grey;padding-left: 1vw;">This Over: </div>
+                </div>
+                <div class="baller-block" style="cursor: pointer;"
+                    *ngFor="let baller of live_match.inning_detail['1']?.versions[live_match.inning_detail['1']?.cur_version]?.ball_detail; let i = index"
+                    [style.border]="baller.current=='*'?'0.3vh solid dodgerblue':'0.3vh solid white'">
+                    <select [(ngModel)]="baller.id"
+                        
+                        style="text-align: left;width: 10vw;float: left;border:none; font-size: 0.8vw;outline:none;background-color: none;font-weight: bold;"
+                        (change)="update_live_match()">
+                        <option value="select">--SELECT--</option>
+                        <option [value]="player.id"
+                            *ngFor="let player of players_team_obj[live_match.inning_detail['1']?.versions[live_match.inning_detail['1']?.cur_version]?.fielding]; let i = index">
+                            {{player.name}}</option>
+                    </select>
+                    <a
+                        style="text-align: center;width: 3vw;float: left;position: relative;top: 0.8vh;left: 0.8vw;">{{baller.total_runs}} ({{baller.bye_runs}})</a>
+                    <div
+                        style="text-align: center;width: 3vw;float: left;position: relative;top: 0.8vh;left: 0.8vw;margin-right: 1vw;">
+                        {{baller.wickets}}</div>
+                    <div style="text-align: left;width: 25vw; height:6.3vh; float: left;position: relative;top: -0.4vh;left: 0.8vw;border-left: 0.2vw solid grey;
+                        padding-left: 1vw;overflow-x: auto;overflow-y: hidden;">
+                        <div style="width: 50vw;">
+                            <div class="ball-block" *ngFor="let ball of baller.over; let i = index">
+                                <div class="ball" [ngClass]="ball.type">
+                                    <a style="position: relative;top:0.4vh">{{ball.runs}}</a>
+                                </div>
+                                <div class="ball-text" [style.color]="ball.text_color">{{ball.text}}</div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="control-panel">
+    <div style="background-color: dodgerblue; color: #343a40; text-align: center;font-weight: bold;font-size: 1vw;">CONTROL
+        PANEL</div><br>
+    <p style="color:white;">Ball not Taken; (+2) Runs; Added to Extras, Baller and Total Score</p>
+    <input type="radio" name="special-ball" value="NB" [(ngModel)]="special_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">No Ball (NB) </label>
+    <input type="radio" name="special-ball" style="margin-left: 2vw;" value="WD" [(ngModel)]="special_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">Wide Ball (WD) </label><br>
+    <p style="color:white;">Ball Taken; No special Runs; Added to Extras and Total Score Only</p>
+    <input type="radio" name="byes" value="B" [(ngModel)]="bye_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">Byes (B) </label><br>
+    <p style="color:white;">Runout, stumping, catch or wicket</p>
+    <input type="radio" name="wicket" value="W" [(ngModel)]="wicket_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">Out (W) </label>
+    <input type="radio" name="wicket" style="margin-left: 2vw;" value="RO" [(ngModel)]="wicket_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">Run-Out (RO)</label><br>
+    <select style="outline: none;font-size:0.8vw"
+        [disabled]="wicket_ball != 'RO'" [(ngModel)]="runout_batsman">
+        <option value="select">--CHOOSE RUNOUT BATSMAN--</option>
+        <option [value]="this.live_match.inning_detail['1']?.versions[this.live_match.inning_detail['1']?.cur_version]?.current_bat">Batsman {{this.live_match.inning_detail["1"]?.versions[this.live_match.inning_detail["1"]?.cur_version]?.current_bat + 1}} : 
+            {{this.players_obj[this.live_match.inning_detail["1"]?.versions[this.live_match.inning_detail["1"]?.cur_version]?.bat_detail[this.live_match.inning_detail["1"]?.versions[this.live_match.inning_detail["1"]?.cur_version]?.current_bat].id]?.name}}</option>
+        <option [value]="this.live_match.inning_detail['1']?.versions[this.live_match.inning_detail['1']?.cur_version]?.next_bat">Batsman {{this.live_match.inning_detail["1"]?.versions[this.live_match.inning_detail["1"]?.cur_version]?.next_bat + 1}} : 
+            {{this.players_obj[this.live_match.inning_detail["1"]?.versions[this.live_match.inning_detail["1"]?.cur_version]?.bat_detail[this.live_match.inning_detail["1"]?.versions[this.live_match.inning_detail["1"]?.cur_version]?.next_bat].id]?.name}} </option>
+    </select><br><br>
+
+    <input type="radio" name="runs-ball" value=0 [(ngModel)]="runs_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">0</label>
+    <input type="radio" name="runs_ball" style="margin-left: 1vw;" value=1 [(ngModel)]="runs_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">1</label>
+    <input type="radio" name="runs_ball" style="margin-left: 1vw;" value=2 [(ngModel)]="runs_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">2</label>
+    <input type="radio" name="runs_ball" style="margin-left: 1vw;" value=3 [(ngModel)]="runs_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">3</label>
+    <input type="radio" name="runs_ball" style="margin-left: 1vw;" value=4 [(ngModel)]="runs_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">4</label>
+    <input type="radio" name="runs_ball" style="margin-left: 1vw;" value=5 [(ngModel)]="runs_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">5</label>
+    <input type="radio" name="runs_ball" style="margin-left: 1vw;" value=6 [(ngModel)]="runs_ball">
+    <label style="color:dodgerblue; margin-left: 0.3vw;">6</label>
+
+    <div class="btn" style="margin-bottom: 1vh;width:12.5vw; margin-top: 2vh;" (click)="record_over_ball()">SUBMIT</div>
+    <div class="btn" style="margin-bottom: 1vh;margin-top: 2vh;border-color: red; color: red;" (click)="clear_control_panel()">Clear
+    </div>
+    <div class="btn" style="margin-bottom: 1vh;border-color: rgb(31, 184, 214); color: rgb(31, 184, 214); margin-top: 1vh;"
+        (click)="update_batsman()">Switch Batsman</div>
+    <button class="btn" style="border-color: yellowgreen; color: yellowgreen" (click)="update_current_version('undo')"
+        [disabled]="this.live_match.inning_detail['1']?.cur_version == 0"
+        [style.opacity]="this.live_match.inning_detail['1']?.cur_version == 0? '0.2': '1'"
+        [style.cursor]="this.live_match.inning_detail['1']?.cur_version == 0? 'no-drop':'pointer'">Undo</button>
+    <button class="btn" style="border-color: rgb(189, 29, 184); color: rgb(189, 29, 184)"
+        (click)="update_current_version('redo')" [disabled]="!this.live_match.inning_detail['1']?.redo_possible"
+        [style.opacity]="!this.live_match.inning_detail['1']?.redo_possible? '0.2': '1'"
+        [style.cursor]="!this.live_match.inning_detail['1']?.redo_possible? 'no-drop':'pointer'">Redo</button>
+</div>
+
+<!--[ngStyle]="{'color': teams_obj[live_match.inning_detail['1']?.versions[live_match.inning_detail['1']?.cur_version]?.fielding]?.color}"-->

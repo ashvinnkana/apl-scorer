@@ -1,0 +1,7 @@
+<input type="text" [(ngModel)]="name">
+<select [(ngModel)]="team">
+    <option value="select">-- SELECT --</option>
+    <option [value]="team.id" *ngFor="let team of teams; let i = index">{{team.name}}</option>
+</select>
+<input type="text" [(ngModel)]="company">
+<button (click)="add_to_team()">Submit</button>
