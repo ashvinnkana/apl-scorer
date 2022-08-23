@@ -25,6 +25,9 @@ export class ScorerDashboardComponent implements OnInit {
     team_1: "select",
     team_2: "select",
     overs: 5,
+    wickets: 7,
+    point_1: 0,
+    point_2: 0,
     balls: 5,
     inning: 1,
     inning_detail: {}
@@ -66,6 +69,8 @@ export class ScorerDashboardComponent implements OnInit {
           team_1: "select",
           team_2: "select",
           overs: 5,
+          wickets: 7,
+          wonby: "",
           balls: 5,
           inning: 1,
           inning_detail: {}
@@ -114,12 +119,12 @@ export class ScorerDashboardComponent implements OnInit {
   public start_match() {
 
     if (this.live_match.team_1 == "select" || this.live_match.team_2 == "select" ||
-      this.live_match.overs == null || this.live_match.balls == null) {
+      this.live_match.overs == null || this.live_match.balls == null || this.live_match.wickets == null) {
       alert("ALERT => All fields Required!")
       return
     }
 
-    if (this.live_match.overs < 1 || this.live_match.balls < 1) {
+    if (this.live_match.overs < 1 || this.live_match.balls < 1 || this.live_match.wickets < 1) {
       alert("ALERT => Overs or Balls cannot be less than 1!")
       return
     }
@@ -129,6 +134,7 @@ export class ScorerDashboardComponent implements OnInit {
         redo_possible: false,
         cur_version: 0,
         versions: [{
+          done: false,
           score: 0,
           extras: 0,
           wicket: 0,
@@ -186,7 +192,7 @@ export class ScorerDashboardComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
-  public update_live_match() {
+  public update_live_match_inning() {
 
     this.back_up_live.inning_detail[this.back_up_live.inning].redo_possible = false
     while (this.back_up_live.inning_detail[this.live_match.inning].cur_version != this.back_up_live.inning_detail[this.live_match.inning].versions.length - 1) {
@@ -217,9 +223,8 @@ export class ScorerDashboardComponent implements OnInit {
     this.update_ball()
     this.update_over()
     this.check_innings()
-
     this.clear_control_panel()
-    this.update_live_match()
+    this.update_live_match_inning()
 
   }
 
@@ -228,14 +233,14 @@ export class ScorerDashboardComponent implements OnInit {
       var out_bat;
       var out_location;
       this.get_current_version(this.live_match.inning).wicket += 1
-      
+
       if (this.wicket_ball == "W") {
         this.get_current_version(this.live_match.inning).ball_detail[this.get_current_version(this.live_match.inning).over].wickets += 1
-        out_bat = this.live_match.inning_detail[this.live_match.inning]?.versions[this.live_match.inning_detail[this.live_match.inning]?.cur_version]?.current_bat
+        out_bat = this.get_current_version(this.live_match.inning)?.current_bat
       } else {
         out_bat = this.runout_batsman
       }
-      
+
       if (this.get_current_version(this.live_match.inning).bat_detail[out_bat].onStrike == "*") {
         out_location = "current_bat"
         this.get_current_version(this.live_match.inning).bat_detail.push({ id: "select", runs: 0, status: "NOT OUT", onStrike: "*" })
@@ -251,7 +256,7 @@ export class ScorerDashboardComponent implements OnInit {
   }
 
   public get_current_version(inning: any) {
-    return this.live_match.inning_detail[inning].versions[this.live_match.inning_detail[inning].cur_version]
+    return this.live_match.inning_detail[inning]?.versions[this.live_match.inning_detail[inning].cur_version]
   }
 
   public handle_specialball() {
@@ -265,6 +270,24 @@ export class ScorerDashboardComponent implements OnInit {
 
   public check_innings() {
 
+    if (this.get_current_version(this.live_match.inning)?.score >= this.get_current_version(this.live_match.inning)?.target) {
+      this.get_current_version(this.live_match.inning).done = true
+      this.live_match.wonby = this.get_current_version(this.live_match.inning).fielding
+      alert("End of Match! Match won by " + this.teams_obj[this.get_current_version(this.live_match.inning).batting]?.name)
+    }
+
+    if (this.get_current_version(this.live_match.inning).wicket == this.live_match.wickets ||
+      this.get_current_version(this.live_match.inning).over == this.live_match.overs) {
+      if (this.live_match.inning == 1) {
+        var target = this.get_current_version(this.live_match.inning).score + 1
+        this.get_current_version(this.live_match.inning).done = true
+        alert("End of 1st Inning, Target : " + target)
+      } else {
+        this.get_current_version(this.live_match.inning).done = true
+        this.live_match.wonby = this.get_current_version(this.live_match.inning).fielding
+        alert("End of Match! Match won by " + this.teams_obj[this.get_current_version(this.live_match.inning).fielding]?.name)
+      }
+    }
   }
 
   public update_over() {
@@ -332,7 +355,7 @@ export class ScorerDashboardComponent implements OnInit {
   }
 
   public update_runs() {
-    if (this.bye_ball != undefined) {
+    if (this.bye_ball != undefined || this.special_ball == "WD") {
       this.get_current_version(this.live_match.inning).extras += Number(this.runs_ball)
       this.get_current_version(this.live_match.inning).ball_detail[this.get_current_version(this.live_match.inning).over].bye_runs += Number(this.runs_ball)
     } else {
@@ -358,6 +381,42 @@ export class ScorerDashboardComponent implements OnInit {
 
   public update_batsman() {
     this.switch_batsman()
-    this.update_live_match()
+    this.update_live_match_inning()
+  }
+
+  public next_inning() {
+    this.live_match.inning_detail["2"] = {
+      redo_possible: false,
+      cur_version: 0,
+      versions: [{
+        target:(this.get_current_version(this.live_match.inning).score + 1),
+        done: false,
+        score: 0,
+        extras: 0,
+        wicket: 0,
+        over: 0,
+        ball: 0,
+        current_bat: 0,
+        next_bat: 1,
+        batting: this.live_match.team_2,
+        bat_detail: [
+          { id: "select", runs: 0, status: "NOT OUT", onStrike: "*" },
+          { id: "select", runs: 0, status: "NOT OUT", onStrike: "" },
+        ],
+        fielding: this.live_match.team_1,
+        ball_detail: [
+          { id: "select", wickets: 0, runs_given: 0, total_runs: 0, bye_runs: 0, current: "*", over: [] }
+        ]
+      }]
+    }
+    this.live_match.inning = 2
+
+    this.live_service.update(this.live_match.id, this.live_match)
+      .then(() => console.log('updated successfully!'))
+      .catch(err => console.log(err));
+  }
+
+  public end_match() {
+
   }
 }

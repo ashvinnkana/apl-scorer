@@ -45,7 +45,7 @@ select {
 }
 
 .input {
-    width: 10vw;
+    width: 5vw;
     font-size: 1vw;
     text-align: right;
     padding: 0.55vh 0.2vw;
@@ -71,6 +71,7 @@ select {
 
 .inning-block {
     font-size: 0.8vw;
+    height: 95vh;
 }
 
 .match-detail {
@@ -91,7 +92,7 @@ select {
 }
 
 .batting-block {
-    width: 25vw;
+    width: 24.8vw;
     float: left;
     margin-top: 1vh;
 }
