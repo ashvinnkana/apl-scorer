@@ -15,6 +15,16 @@
                 <option [value]="team.id" *ngFor="let team of teams; let i = index">{{team.name}}</option>
             </select>
         </div>
+        <div class="team-container" style="width: 7vw;margin-left: 1vw; text-align: center;">
+            <a for="type" class="heading">Type</a><br>
+            <select [(ngModel)]="live_match.type" [disabled]="isLive" style="width:7vw">
+                <option value="unrated">UNRATED</option>
+                <option value="group">GROUP</option>
+                <option value="final">FINAL</option>
+                <option value="runnerup">RUNNER-UP</option>
+                <option value="semifinal">SEMIFINAL</option>
+            </select>
+        </div>
         <div class="team-container" style="width: 5vw; margin-left:2vw;text-align: center;">
             <a for="team-2" class="heading">Overs</a><br>
             <input type="number" class="input" [(ngModel)]="live_match.overs" [disabled]="isLive">
@@ -36,8 +46,8 @@
         </div>
     </div>
     <div class="match-detail" [hidden]="!isLive" style="height:77vh;">
-
-        <div id="inning-2" class="inning-block">
+        
+        <div id="inning-2" class="inning-block" [hidden]="(live_match.inning == 1)">
             <div class="heading"
                 style="font-size: 1.1vw;color: white; background-color: grey; padding: 0.8vh 2vw;width: 69vw; text-align: center;">
                 2nd Inning <a style="color: gold">[ TARGET : {{get_current_version("2")?.target}} runs ]</a></div><br>
@@ -74,7 +84,7 @@
                             <option value="select">--SELECT--</option>
                             <option [value]="player.id"
                                 *ngFor="let player of players_team_obj[get_current_version('2')?.batting]; let i = index">
-                                {{player.name}}</option>
+                                {{player.name}} [{{batsman.points}}]</option>
                         </select>
                         <a
                             style="text-align: center;width: 3vw;float: left;position: relative;top: 0.8vh;left: 1vw;">{{batsman.runs}}</a>
@@ -92,7 +102,7 @@
                     <br>
                     <div class="baller-block" style="box-shadow: none;padding-left: 1vw;height: 4vh;">
                         <a style="text-align: left;width: 10vw;float: left;border:none; font-size: 0.8vw;outline:none;background-color: none;
-                        font-weight: bold;">Baller</a>
+                        font-weight: bold;">Bowler</a>
                         <a style="text-align: center;font-weight: bold;width: 3vw;float: left;">Runs</a>
                         <a
                             style="text-align: center;font-weight: bold;width: 3vw;float: left;margin-right: 1vw;">Wickets</a>
@@ -108,7 +118,7 @@
                             <option value="select">--SELECT--</option>
                             <option [value]="player.id"
                                 *ngFor="let player of players_team_obj[get_current_version('2')?.fielding]; let i = index">
-                                {{player.name}}</option>
+                                {{player.name}} [{{baller.points}}]</option>
                         </select>
                         <a style="text-align: center;width: 3vw;float: left;position: relative;top: 0.8vh;left: 0.8vw;">{{baller.total_runs}}
                             ({{baller.bye_runs}})</a>
@@ -169,7 +179,7 @@
                             <option value="select">--SELECT--</option>
                             <option [value]="player.id"
                                 *ngFor="let player of players_team_obj[get_current_version('1')?.batting]; let i = index">
-                                {{player.name}}</option>
+                                {{player.name}} [{{batsman.points}}]</option>
                         </select>
                         <a
                             style="text-align: center;width: 3vw;float: left;position: relative;top: 0.8vh;left: 1vw;">{{batsman.runs}}</a>
@@ -187,7 +197,7 @@
                     <br>
                     <div class="baller-block" style="box-shadow: none;padding-left: 1vw;height: 4vh;">
                         <a style="text-align: left;width: 10vw;float: left;border:none; font-size: 0.8vw;outline:none;background-color: none;
-                        font-weight: bold;">Baller</a>
+                        font-weight: bold;">Bowler</a>
                         <a style="text-align: center;font-weight: bold;width: 3vw;float: left;">Runs</a>
                         <a
                             style="text-align: center;font-weight: bold;width: 3vw;float: left;margin-right: 1vw;">Wickets</a>
@@ -203,7 +213,7 @@
                             <option value="select">--SELECT--</option>
                             <option [value]="player.id"
                                 *ngFor="let player of players_team_obj[get_current_version('1')?.fielding]; let i = index">
-                                {{player.name}}</option>
+                                {{player.name}} [{{baller.points}}]</option>
                         </select>
                         <a style="text-align: center;width: 3vw;float: left;position: relative;top: 0.8vh;left: 0.8vw;">{{baller.total_runs}}
                             ({{baller.bye_runs}})</a>

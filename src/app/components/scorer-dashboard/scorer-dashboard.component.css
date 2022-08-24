@@ -21,7 +21,7 @@
   }
   
   .team-container {
-    width: 20vw;
+    width: 15vw;
     font-size: 1vw;
     float: left;
 }
@@ -34,7 +34,7 @@
 }
 
 select {
-    width: 20vw;
+    width: 15vw;
     font-size: 1vw;
     padding: 0.8vh 0.2vw;
 }
