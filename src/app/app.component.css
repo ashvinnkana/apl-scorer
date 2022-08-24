@@ -2,3 +2,8 @@
   text-align: center;
   margin: 25px auto;
 }
+
+.nav-link {
+  border-left: 0.1vh solid white;
+  padding: 0 2vw; 
+}
