@@ -101,6 +101,7 @@ export class ScorerDashboardComponent implements OnInit {
       )
     ).subscribe(data => {
       this.teams = data;
+      this.teams_obj = {}
       for (let team of this.teams) {
         this.teams_obj[team.id] = team
       }
@@ -116,6 +117,8 @@ export class ScorerDashboardComponent implements OnInit {
       )
     ).subscribe(data => {
       this.players = data;
+      this.players_obj = {}
+      this.players_team_obj = {}
       for (let player of this.players) {
         this.players_obj[player.id] = player
         try {
