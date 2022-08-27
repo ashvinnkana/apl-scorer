@@ -47,6 +47,9 @@ export class TeamManagementComponent implements OnInit {
     //for (let data of datas){  
       this.player_service.create(data).then(() => {
         console.log('New player added!');
+        this.name = ""
+        this.team = "select"
+        this.company = ""
       });
     //}
     

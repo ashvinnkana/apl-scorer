@@ -6,6 +6,7 @@ import { BatsmanRankComponent } from './components/batsman-rank/batsman-rank.com
 import { BowlerRankComponent } from './components/bowler-rank/bowler-rank.component';
 import { MotsRankComponent } from './components/mots-rank/mots-rank.component';
 import { PointsTableComponent } from './components/points-table/points-table.component';
+import { MatchesComponent } from './components/matches/matches.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'live-match', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'best-bowler', component: BowlerRankComponent },
   { path: 'man-of-the-series', component: MotsRankComponent },
   { path: 'points-table', component: PointsTableComponent },
+  { path: 'matches', component: MatchesComponent },
 ];
 
 @NgModule({

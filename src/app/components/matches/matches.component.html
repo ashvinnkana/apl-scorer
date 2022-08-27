@@ -1,0 +1,5 @@
+<h4>All Matches</h4>
+<p>click to find match detail in console!</p>
+<ul>
+    <li class="linking" *ngFor="let match of matches;  let i = index" (click)="consoleMatchData(match.id)">[{{match.type}}] {{teams[match.team_1].name}} VS {{teams[match.team_2].name}}</li>
+</ul>

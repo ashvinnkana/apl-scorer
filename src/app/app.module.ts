@@ -14,6 +14,7 @@ import { BatsmanRankComponent } from './components/batsman-rank/batsman-rank.com
 import { BowlerRankComponent } from './components/bowler-rank/bowler-rank.component';
 import { MotsRankComponent } from './components/mots-rank/mots-rank.component';
 import { PointsTableComponent } from './components/points-table/points-table.component';
+import { MatchesComponent } from './components/matches/matches.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PointsTableComponent } from './components/points-table/points-table.com
     BatsmanRankComponent,
     BowlerRankComponent,
     MotsRankComponent,
-    PointsTableComponent
+    PointsTableComponent,
+    MatchesComponent
   ],
   imports: [
     BrowserModule,
