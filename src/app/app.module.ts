@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { ScorerDashboardComponent } from './components/scorer-dashboard/scorer-dashboard.component';
 import { TeamManagementComponent } from './components/team-management/team-management.component';
 import { BatsmanRankComponent } from './components/batsman-rank/batsman-rank.component';
+import { BowlerRankComponent } from './components/bowler-rank/bowler-rank.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScorerDashboardComponent,
     TeamManagementComponent,
-    BatsmanRankComponent
+    BatsmanRankComponent,
+    BowlerRankComponent
   ],
   imports: [
     BrowserModule,

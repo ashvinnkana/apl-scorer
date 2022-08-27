@@ -1,0 +1,18 @@
+<table id="design">
+    <tr>
+        <th>Rank</th>
+        <th>Bowler</th>
+        <th>Team</th>
+        <th>Company</th>
+        <th>Total Wickets</th>
+        <th>Wicket History</th>
+    </tr>
+    <tr *ngFor="let bowler of bowler_rank;  let i = index">
+        <td>{{i+1}}</td>
+        <td>{{players[bowler.bowler_id].name}}</td>
+        <td>{{teams[players[bowler.bowler_id].team].name}}</td>
+        <td>{{players[bowler.bowler_id].company}}</td>
+        <td>{{bowler.total_wickets}}</td>
+        <td><a *ngFor="let wicket of bowler.wickets">{{wicket}} <a style="color:red"> | </a></a></td>
+    </tr>
+</table>
