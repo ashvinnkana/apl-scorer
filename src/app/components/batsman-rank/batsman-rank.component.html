@@ -1,1 +1,18 @@
-<p>batsman-rank works!</p>
+<table id="customers">
+    <tr>
+        <th>Rank</th>
+        <th>Batsman</th>
+        <th>Team</th>
+        <th>Company</th>
+        <th>Total Runs</th>
+        <th>Scoring History</th>
+    </tr>
+    <tr *ngFor="let batsman of batsman_rank;  let i = index">
+        <td>{{i+1}}</td>
+        <td>{{players[batsman.batsman_id].name}}</td>
+        <td>{{teams[players[batsman.batsman_id].team].name}}</td>
+        <td>{{players[batsman.batsman_id].company}}</td>
+        <td>{{batsman.total_runs}}</td>
+        <td><a *ngFor="let score of batsman.runs">{{score}} <a style="color:red"> | </a></a></td>
+    </tr>
+</table>
