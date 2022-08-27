@@ -1,0 +1,41 @@
+<h4>Group Round</h4>
+<table id="design">
+    <tr>
+        <th>Rank</th>
+        <th>Team</th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Tied</th>
+        <th>Points</th>
+    </tr>
+    <tr *ngFor="let team of group_rank;  let i = index">
+        <td>{{i+1}}</td>
+        <td>{{teams[team.team_id].name}}</td>
+        <td>{{team.played}}</td>
+        <td>{{team.won}}</td>
+        <td>{{team.tied}}</td>
+        <td>{{team.points}}</td>
+    </tr>
+</table>
+<br>
+<h4>Semi-Finals Round</h4>
+<table id="design">
+    <tr>
+        <th>Rank</th>
+        <th>Team</th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Tied</th>
+        <th>Points</th>
+    </tr>
+    <tr *ngFor="let team of semi_rank;  let i = index">
+        <td>{{i+1}}</td>
+        <td>{{teams[team.team_id].name}}</td>
+        <td>{{team.played}}</td>
+        <td>{{team.won}}</td>
+        <td>{{team.tied}}</td>
+        <td>{{team.points}}</td>
+    </tr>
+</table>
+
+

@@ -13,6 +13,7 @@ import { TeamManagementComponent } from './components/team-management/team-manag
 import { BatsmanRankComponent } from './components/batsman-rank/batsman-rank.component';
 import { BowlerRankComponent } from './components/bowler-rank/bowler-rank.component';
 import { MotsRankComponent } from './components/mots-rank/mots-rank.component';
+import { PointsTableComponent } from './components/points-table/points-table.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MotsRankComponent } from './components/mots-rank/mots-rank.component';
     TeamManagementComponent,
     BatsmanRankComponent,
     BowlerRankComponent,
-    MotsRankComponent
+    MotsRankComponent,
+    PointsTableComponent
   ],
   imports: [
     BrowserModule,
