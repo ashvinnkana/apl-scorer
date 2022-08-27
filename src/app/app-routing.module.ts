@@ -4,6 +4,7 @@ import { ScorerDashboardComponent } from './components/scorer-dashboard/scorer-d
 import { TeamManagementComponent } from './components/team-management/team-management.component';
 import { BatsmanRankComponent } from './components/batsman-rank/batsman-rank.component';
 import { BowlerRankComponent } from './components/bowler-rank/bowler-rank.component';
+import { MotsRankComponent } from './components/mots-rank/mots-rank.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'live-match', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'players', component: TeamManagementComponent },
   { path: 'best-batsman', component: BatsmanRankComponent },
   { path: 'best-bowler', component: BowlerRankComponent },
+  { path: 'man-of-the-series', component: MotsRankComponent },
 ];
 
 @NgModule({

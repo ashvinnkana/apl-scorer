@@ -1,0 +1,22 @@
+<table id="design">
+    <tr>
+        <th>Rank</th>
+        <th>Player</th>
+        <th>Team</th>
+        <th>Company</th>
+        <th>Total Points</th>
+        <th>Faced</th>
+        <th>Batting_history</th>
+        <th>bowling_history</th>
+    </tr>
+    <tr *ngFor="let point of points_rank;  let i = index">
+        <td>{{i+1}}</td>
+        <td>{{players[point.player_id].name}}</td>
+        <td>{{teams[players[point.player_id].team].name}}</td>
+        <td>{{players[point.player_id].company}}</td>
+        <td>{{point.total_points}}</td>
+        <td>{{point.faced}}</td>
+        <td><a *ngFor="let pnt of point.bat_history">{{pnt}} <a style="color:red"> | </a></a></td>
+        <td><a *ngFor="let pnt of point.ball_history">{{pnt}} <a style="color:red"> | </a></a></td>
+    </tr>
+</table>

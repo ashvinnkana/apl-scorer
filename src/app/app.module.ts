@@ -12,6 +12,7 @@ import { ScorerDashboardComponent } from './components/scorer-dashboard/scorer-d
 import { TeamManagementComponent } from './components/team-management/team-management.component';
 import { BatsmanRankComponent } from './components/batsman-rank/batsman-rank.component';
 import { BowlerRankComponent } from './components/bowler-rank/bowler-rank.component';
+import { MotsRankComponent } from './components/mots-rank/mots-rank.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BowlerRankComponent } from './components/bowler-rank/bowler-rank.compon
     ScorerDashboardComponent,
     TeamManagementComponent,
     BatsmanRankComponent,
-    BowlerRankComponent
+    BowlerRankComponent,
+    MotsRankComponent
   ],
   imports: [
     BrowserModule,
