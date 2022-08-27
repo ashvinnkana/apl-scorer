@@ -10,12 +10,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ScorerDashboardComponent } from './components/scorer-dashboard/scorer-dashboard.component';
 import { TeamManagementComponent } from './components/team-management/team-management.component';
+import { BatsmanRankComponent } from './components/batsman-rank/batsman-rank.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScorerDashboardComponent,
-    TeamManagementComponent
+    TeamManagementComponent,
+    BatsmanRankComponent
   ],
   imports: [
     BrowserModule,

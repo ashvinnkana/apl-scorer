@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Team } from 'src/app/models/team.model';
 import { TeamService } from './../../services/team.service';
 import { LiveMatchService } from './../../services/live-match.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { MatchService } from 'src/app/services/match.service';
 import { BatsmanService } from 'src/app/services/batsman.service';
 import { BallerService } from 'src/app/services/baller.service';
-import { Baller } from 'src/app/models/baller.model';
 import { PointService } from 'src/app/services/points.service';
 
 interface LooseObject {
